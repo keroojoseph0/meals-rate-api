@@ -11,6 +11,24 @@ class Meal(models.Model):
     description = models.TextField()
     slug = models.SlugField(unique=True, blank=True)
     
+    def no_of_rates(self):
+        rates = Rate.objects.filter(meal = self)
+        return rates.count()
+    
+    def avg_rates(self):
+        rates = Rate.objects.filter(meal = self)
+        sum = 0
+        
+        for i in rates:
+            sum += i.stars
+            
+        if len(rates) > 0:
+            return sum / int(rates.count())
+        else:
+            return 0
+
+        
+    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
