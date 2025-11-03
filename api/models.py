@@ -25,9 +25,7 @@ class Meal(models.Model):
         if len(rates) > 0:
             return sum / int(rates.count())
         else:
-            return 0
-
-        
+            return 0    
     
     def save(self, *args, **kwargs):
         if not self.slug:
